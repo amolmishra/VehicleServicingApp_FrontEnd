@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_reg_service_center"
+            android:icon="@drawable/ic_service_center_black"
+            android:title="Register you Service Center" />
+        <item
+            android:id="@+id/nav_reg_vehicle"
+            android:icon="@drawable/ic_car_black"
+            android:title="Register Your Vehicle" />
+        <item
+            android:id="@+id/nav_service_booking"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Service Booking" />
+        <item
+            android:id="@+id/nav_service_history"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Service History" />
+        <item
+            android:id="@+id/nav_cost_calc"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Cost Calculation" />
+
+    </group>
+
+    <item android:title="My Account">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Profile" />
+        </menu>
+    </item>
+
+    <item android:title="More">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Contact Us" />
+        </menu>
+    </item>
+
+</menu>
