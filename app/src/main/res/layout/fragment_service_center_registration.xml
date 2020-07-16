@@ -19,12 +19,12 @@
             android:id="@+id/spinner_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/submit_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.73"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.678"
+            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintStart_toEndOf="@+id/textViewCompany"
+            app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+            app:layout_constraintVertical_bias="0.494"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintTop_creator="1" />
 
@@ -37,10 +37,10 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.249"
+            app:layout_constraintHorizontal_bias="0.187"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-            app:layout_constraintVertical_bias="0.245"
+            app:layout_constraintVertical_bias="0.379"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintTop_creator="1" />
 
@@ -53,48 +53,76 @@
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/editTextAddress"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.434"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.814" />
+            app:layout_constraintVertical_bias="0.839" />
 
         <EditText
             android:id="@+id/editTextAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="36dp"
             android:ems="10"
             android:hint="Address"
             android:inputType="textPostalAddress"
             app:layout_constraintBottom_toTopOf="@+id/editTextPhone"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.434"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/editTextPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="28dp"
             android:ems="10"
             android:hint="Phone"
             android:inputType="phone"
             app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.434"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="324dp"
+            android:layout_marginBottom="256dp"
             android:ems="10"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.434"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/et_latitude"
+            android:layout_width="111dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginLeft="36dp"
+            android:ems="10"
+            android:hint="Lat"
+            android:inputType="textEmailAddress"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCompany"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+            app:layout_constraintVertical_bias="0.261" />
+
+        <EditText
+            android:id="@+id/et_longitude"
+            android:layout_width="111dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Long"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.66"
+            app:layout_constraintStart_toEndOf="@+id/et_latitude"
+            app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
         <Button
             android:id="@+id/submit_button"
@@ -105,8 +133,24 @@
             android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCompany" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewCompany"
+            app:layout_constraintVertical_bias="0.907" />
+
+        <Button
+            android:id="@+id/btn_locate"
+            android:layout_width="254dp"
+            android:layout_height="48dp"
+            android:background="#009688"
+            android:text="Locate Me"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCompany"
+            app:layout_constraintVertical_bias="0.231" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

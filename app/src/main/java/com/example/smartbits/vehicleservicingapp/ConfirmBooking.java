@@ -208,7 +208,8 @@ public class ConfirmBooking extends AppCompatActivity {
                     params.put("registered_car_id", carDetails);
                     params.put("date", date);
                     params.put("time", time);
-                    params.put("centerid", serviceCenter);
+                    params.put("centerdetails", serviceCenter);
+                    params.put("centerid", String.valueOf(centerId));
                     params.put("pickup", pickup);
                     params.put("charges", "Will be decided later");
                     Log.d("paramsConfirmBooking:", params.toString());
