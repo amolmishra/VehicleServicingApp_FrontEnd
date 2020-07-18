@@ -62,8 +62,9 @@ public class SplashActivity extends AppCompatActivity {
                             phone = serviceCenter.getString("phone");
                             company = serviceCenter.getString("company");
                             email = serviceCenter.getString("email");
-
-                            db.addServiceCenters(id, name, address, phone, company, email);
+                            String latitude = serviceCenter.getString("lat");
+                            String longitude = serviceCenter.getString("lon");
+                            db.addServiceCenters(id, name, address, phone, company, email, latitude, longitude);
                         }
                     }
                 } catch (Exception e) {

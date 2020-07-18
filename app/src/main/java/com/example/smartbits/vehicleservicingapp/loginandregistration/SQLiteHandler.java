@@ -134,7 +134,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
      * Storing service centers in database
      */
 
-    public void addServiceCenters(int id, String name, String address, String phone, String company, String email) {
+    public void addServiceCenters(int id, String name, String address, String phone, String company, String email, String latitude, String longitude) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -145,8 +145,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_PHONE, phone);
         values.put(KEY_COMPANY, company);
         values.put(KEY_EMAIL, email);
-
-
+        values.put(KEY_LATITUDE, latitude);
+        values.put(KEY_LONGITUDE, longitude);
         //Inserting row
         long uid = db.insert(TABLE_SERVICE_CENTERS, null, values);
         db.close();
@@ -190,6 +190,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("name", cursor.getString(1));
             user.put("username", cursor.getString(3));
             user.put("email", cursor.getString(2));
+            user.put("lat", cursor.getString(4));
+            user.put("lon", cursor.getString(5));
         }
         cursor.close();
         db.close();
@@ -201,8 +203,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Getting user data from database
      */
-    public ArrayList<String> getServiceCenterDetails(String comp) {
-        ArrayList<String> serviceCenters = new ArrayList<>();
+    public HashMap<Integer, String> getServiceCenterDetails(String comp) {
+        HashMap<Integer, String> serviceCenters = new HashMap<>();
         String selectQuery = "SELECT * FROM " + TABLE_SERVICE_CENTERS + " WHERE company = '" + comp +"'";
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -211,8 +213,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
         if (cursor != null && cursor.getCount() > 0) {
             do {
-                String serviceCenter = cursor.getString(1) + "\n" + cursor.getString(2) + "\n" + cursor.getString(3) + "\n" + cursor.getString(4) + "\n" + cursor.getString(5);
-                serviceCenters.add(serviceCenter);
+                String serviceCenter = cursor.getString(1) + "\n" + cursor.getString(2);
+                serviceCenters.put(cursor.getInt(0), serviceCenter);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -317,7 +319,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return car;
     }
 
-    public String getCenterById(int id) {
+    public String getCenterNameById(int id) {
         String center = "";
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * from service_centers WHERE id = '" + id + "'";
@@ -329,6 +331,27 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 
         return center;
+    }
+
+    public Map<String, String> getCenterById(int id) {
+        HashMap<String, String> values = new HashMap<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * from service_centers WHERE id = '" + id + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        if (cursor != null && cursor.getCount() > 0) {
+            values.put(KEY_ID, cursor.getString(0));
+            values.put(KEY_NAME, cursor.getString(1));
+            values.put(KEY_ADDRESS, cursor.getString(2));
+            values.put(KEY_PHONE, cursor.getString(3));
+            values.put(KEY_COMPANY, cursor.getString(4));
+            values.put(KEY_EMAIL, cursor.getString(5));
+            values.put(KEY_LATITUDE, cursor.getString(6));
+            values.put(KEY_LONGITUDE, cursor.getString(7));
+        }
+
+
+        return values;
     }
 
     public void addHistory(String username, String registered_car_id, String date, String time, int centerid, String pickup, int charges) {

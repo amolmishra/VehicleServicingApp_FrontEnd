@@ -216,6 +216,10 @@ public class LoginActivity extends AppCompatActivity {
                     // JSON error
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }finally {
+                    if(pDialog.isShowing()) {
+                        pDialog.hide();
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -223,6 +227,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Login Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                if(pDialog.isShowing()) {
+                    pDialog.hide();
+                }
             }
         }) {
 

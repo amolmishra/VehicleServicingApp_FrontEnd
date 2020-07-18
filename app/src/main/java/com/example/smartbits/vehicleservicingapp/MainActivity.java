@@ -16,7 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.smartbits.vehicleservicingapp.Fragments.CostCalculation;
 import com.example.smartbits.vehicleservicingapp.Fragments.HomeFragment;
 import com.example.smartbits.vehicleservicingapp.Fragments.ServiceBooking;
 import com.example.smartbits.vehicleservicingapp.Fragments.ServiceCenterRegistration;
@@ -150,12 +149,6 @@ public class MainActivity extends AppCompatActivity
             ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, fragment);
             ft.commit();
-        } else if (id == R.id.nav_cost_calc) {
-            getSupportActionBar().setTitle("Cost Calculation");
-            fragment = new CostCalculation();
-            ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.frame, fragment);
-            ft.commit();
         } else if (id == R.id.nav_profile) {
             Intent intent = new Intent(getApplicationContext(), Profile.class);
             startActivity(intent);
@@ -180,6 +173,7 @@ public class MainActivity extends AppCompatActivity
         db.deleteUsers();
         db.deleteCars();
         db.deleteServiceCenters();
+        db.deleteHistory();
 
         // Launching the login activity
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

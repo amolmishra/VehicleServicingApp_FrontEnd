@@ -2,6 +2,8 @@ package com.example.smartbits.vehicleservicingapp.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -94,6 +97,21 @@ public class ServiceHistory extends Fragment {
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
+                String clickedOn = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
+                if(clickedOn.contains("Click here to navigate")) {
+                    List<String> values = listDataChild.get(listDataHeader.get(groupPosition));
+                    String centerID = values.get(3);
+                    if(centerID != null) {
+                        centerID = centerID.split(": ")[1];
+                        Map<String, String> centerDetails = db.getCenterById(Integer.parseInt(centerID));
+                        String latitude = centerDetails.get("lat");
+                        String longitude = centerDetails.get("lon");
+                        Uri navigationIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, navigationIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        startActivity(mapIntent);
+                    }
+                }
                 return false;
             }
         });
@@ -112,6 +130,7 @@ public class ServiceHistory extends Fragment {
             String carid = (String) it.next();
             listDataHeader.add(carid);
             List<String> value = histories.get(carid);
+            value.add("Click here to navigate to the Service Center.");
             listDataChild.put(carid, value);
         }
     }

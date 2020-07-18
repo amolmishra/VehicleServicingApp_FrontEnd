@@ -161,7 +161,7 @@ public class ConfirmBooking extends AppCompatActivity {
     }
 
     private void sendEmail(final String username, final String carId, final String date, final String time, final int centerId, final String pickup) {
-        final String serviceCenter = db.getCenterById(centerId);
+        final String serviceCenter = db.getCenterNameById(centerId);
         final String carDetails = db.getCarById(carId);
 
             String tag_string_req = "req_send_confirmation";

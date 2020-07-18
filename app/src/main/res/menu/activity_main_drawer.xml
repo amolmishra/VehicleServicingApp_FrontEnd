@@ -18,11 +18,6 @@
             android:id="@+id/nav_service_history"
             android:icon="@drawable/ic_menu_camera"
             android:title="Service History" />
-        <item
-            android:id="@+id/nav_cost_calc"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Cost Calculation" />
-
     </group>
 
     <item android:title="My Account">

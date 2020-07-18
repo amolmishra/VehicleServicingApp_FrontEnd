@@ -4,7 +4,9 @@ package com.example.smartbits.vehicleservicingapp.Fragments;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +28,13 @@ import com.example.smartbits.vehicleservicingapp.R;
 import com.example.smartbits.vehicleservicingapp.loginandregistration.SQLiteHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +46,6 @@ public class ServiceBooking extends Fragment implements AdapterView.OnItemSelect
     private Spinner sb_service_center;
     private CheckBox sb_pickup_delivery;
     private String name, center, date, time, pickup;
-
     private SQLiteHandler db;
 
 
@@ -183,8 +189,52 @@ public class ServiceBooking extends Fragment implements AdapterView.OnItemSelect
     private ArrayList<String> getServiceCenters(String carName) {
         String[] split = carName.split("\\s+");
         String name = split[0];
-        ArrayList<String> serviceCenters = db.getServiceCenterDetails(name);
+        HashMap<Integer, String> serviceCenters = db.getServiceCenterDetails(name);
+        ArrayList<String> centersList = getSortedCentersList(serviceCenters);
         Log.d("SERVICECENTERS:", serviceCenters.toString());
-        return serviceCenters;
+        return centersList;
+    }
+
+    private ArrayList<String> getSortedCentersList(HashMap<Integer, String> serviceCenters) {
+        HashMap<String, String> userDetails = db.getUserDetails();
+        double userLatitude = userDetails.get("lat") != null? Double.parseDouble(userDetails.get("lat")): 0;
+        double userLongitude = userDetails.get("lon") != null? Double.parseDouble(userDetails.get("lon")): 0;
+        Iterator i = serviceCenters.keySet().iterator();
+        Map<Integer, Float> distanceMap = new HashMap<>();
+        while (i.hasNext()){
+            int centerid = (int) i.next();
+            distanceMap.put(centerid, getDistance(userLatitude, userLongitude, centerid));
+        }
+        ArrayList<String> sortedCentersList = sortCentersList(distanceMap, serviceCenters);
+        return sortedCentersList;
+    }
+
+    private ArrayList<String> sortCentersList(Map<Integer, Float> distanceMap, HashMap<Integer, String> serviceCenters) {
+        ArrayList<String> sortedCenters = new ArrayList<>();
+        Object[] centerIDArray = distanceMap.keySet().toArray();
+        for (int i = 0; i <centerIDArray.length; i++) {
+            for (int j = i+1; j <centerIDArray.length; j++) {
+                if(distanceMap.get(centerIDArray[i]) > distanceMap.get(centerIDArray[j])) {      //swap elements if not in order
+                    Object temp = centerIDArray[i];
+                    centerIDArray[i] = centerIDArray[j];
+                    centerIDArray[j] = temp;
+                }
+            }
+        }
+
+        for (Object id : centerIDArray) {
+            sortedCenters.add(serviceCenters.get(id));
+        }
+        return sortedCenters;
+    }
+
+    private float getDistance(double userLat, double userLong, int centerId) {
+        Map<String, String> centerDetails = db.getCenterById(centerId);
+        double centerLat = centerDetails.get("lat") != null? Double.parseDouble(centerDetails.get("lat")): 0;
+        double centerLon = centerDetails.get("lon") != null? Double.parseDouble(centerDetails.get("lon")): 0;
+        float [] results = {1};
+        Location.distanceBetween(centerLat, centerLon, userLat, userLong, results);
+        String d=Float.toString(results[0]);
+        return results[0];
     }
 }
