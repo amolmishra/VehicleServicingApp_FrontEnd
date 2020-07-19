@@ -382,7 +382,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
             do {
-                String carid = cursor.getString(1);
+                String carid = cursor.getString(1) + " (Center: " + cursor.getString(4) + ")";
                 List<String> history = new ArrayList<>();
                 history.add("Car ID: " + cursor.getString(1));
                 history.add("Date: " + cursor.getString(2));
