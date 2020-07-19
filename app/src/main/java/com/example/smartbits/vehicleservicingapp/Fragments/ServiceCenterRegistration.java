@@ -307,7 +307,9 @@ public class ServiceCenterRegistration extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        locationTrack.stopListener();
+        if(locationTrack != null) {
+            locationTrack.stopListener();
+        }
     }
 
 }
